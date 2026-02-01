@@ -1,0 +1,550 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日市场行情报告 - 2026-02-01 21:37:42</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Orbitron', 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background: #0a0a0a;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 191, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 20, 147, 0.1) 0%, transparent 50%);
+            padding: 20px;
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(15, 15, 25, 0.95);
+            border-radius: 20px;
+            border: 2px solid #8a2be2;
+            box-shadow: 
+                0 0 30px rgba(138, 43, 226, 0.5),
+                0 0 60px rgba(0, 191, 255, 0.3),
+                inset 0 0 20px rgba(138, 43, 226, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #8a2be2 0%, #00bfff 50%, #ff1493 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 5s ease infinite;
+            color: #fff;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(138, 43, 226, 0.8),
+                0 0 30px rgba(0, 191, 255, 0.6);
+            font-weight: 900;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .content {
+            padding: 30px;
+            background: rgba(10, 10, 15, 0.5);
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            color: #00bfff;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #8a2be2;
+            text-shadow: 0 0 10px rgba(0, 191, 255, 0.8);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .assets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .asset-card {
+            background: rgba(20, 20, 30, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #4a4a5a;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .asset-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #8a2be2, #00bfff, #ff1493);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .asset-card:hover {
+            transform: translateY(-8px);
+            border-color: #8a2be2;
+            box-shadow: 
+                0 10px 30px rgba(138, 43, 226, 0.4),
+                0 0 20px rgba(0, 191, 255, 0.3);
+        }
+        
+        .asset-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .asset-card.positive {
+            border-color: #00ff88;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+        }
+        
+        .asset-card.positive:hover {
+            box-shadow: 
+                0 10px 30px rgba(0, 255, 136, 0.5),
+                0 0 25px rgba(0, 255, 136, 0.4);
+        }
+        
+        .asset-card.negative {
+            border-color: #ff1744;
+            box-shadow: 0 0 15px rgba(255, 23, 68, 0.3);
+        }
+        
+        .asset-card.negative:hover {
+            box-shadow: 
+                0 10px 30px rgba(255, 23, 68, 0.5),
+                0 0 25px rgba(255, 23, 68, 0.4);
+        }
+        
+        .asset-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #00bfff;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(0, 191, 255, 0.6);
+            letter-spacing: 1px;
+        }
+        
+        .asset-price {
+            font-size: 2.2em;
+            font-weight: 900;
+            color: #ff1493;
+            margin: 15px 0;
+            text-shadow: 
+                0 0 10px rgba(255, 20, 147, 0.8),
+                0 0 20px rgba(255, 20, 147, 0.5);
+            letter-spacing: 2px;
+        }
+        
+        .asset-change {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin: 10px 0;
+            letter-spacing: 1px;
+        }
+        
+        .asset-change.positive {
+            color: #00ff88;
+            text-shadow: 
+                0 0 10px rgba(0, 255, 136, 0.8),
+                0 0 20px rgba(0, 255, 136, 0.5);
+        }
+        
+        .asset-change.negative {
+            color: #ff1744;
+            text-shadow: 
+                0 0 10px rgba(255, 23, 68, 0.8),
+                0 0 20px rgba(255, 23, 68, 0.5);
+        }
+        
+        .asset-details {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(138, 43, 226, 0.3);
+            font-size: 0.95em;
+            color: #b0b0b0;
+        }
+        
+        .asset-details div {
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+        
+        .asset-details span:first-child {
+            color: #8a2be2;
+        }
+        
+        .asset-details span:last-child {
+            color: #00bfff;
+            font-weight: 600;
+        }
+        
+        .summary {
+            background: rgba(20, 20, 30, 0.6);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            border: 2px solid rgba(138, 43, 226, 0.5);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+        }
+        
+        .summary h3 {
+            color: #00bfff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 191, 255, 0.6);
+            font-size: 1.5em;
+            letter-spacing: 1px;
+        }
+        
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(15, 15, 25, 0.8);
+            border-radius: 12px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            border-color: #8a2be2;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
+            transform: scale(1.05);
+        }
+        
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: 900;
+            color: #ff1493;
+            text-shadow: 
+                0 0 10px rgba(255, 20, 147, 0.8),
+                0 0 20px rgba(255, 20, 147, 0.5);
+            letter-spacing: 2px;
+        }
+        
+        .stat-label {
+            color: #b0b0b0;
+            margin-top: 10px;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: #888;
+            background: rgba(10, 10, 15, 0.8);
+            border-top: 1px solid rgba(138, 43, 226, 0.3);
+            font-size: 0.9em;
+        }
+        
+        .footer p {
+            text-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 每日市场行情报告</h1>
+            <p>更新时间: 2026-02-01 21:37:42</p>
+        </div>
+        
+        <div class="content">
+            <!-- 股票指数 -->
+            <div class="section">
+                <h2 class="section-title">📈 股票指数</h2>
+                <div class="assets-grid">
+                    
+                    <div class="asset-card negative">
+                        <div class="asset-name">恒生指数</div>
+                        <div class="asset-price">27387.11</div>
+                        <div class="asset-change negative">
+                            -580.98 (-2.08%)
+                        </div>
+                        <div class="asset-details">
+                            <div><span>开盘:</span> <span>27785.98</span></div>
+                            <div><span>最高:</span> <span>27887.24</span></div>
+                            <div><span>最低:</span> <span>27384.02</span></div>
+                            <div><span>昨收:</span> <span>27968.09</span></div>
+                            <div><span>日期:</span> <span>2026-01-30</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="asset-card negative">
+                        <div class="asset-name">纳斯达克</div>
+                        <div class="asset-price">23461.82</div>
+                        <div class="asset-change negative">
+                            -223.3 (-0.94%)
+                        </div>
+                        <div class="asset-details">
+                            <div><span>开盘:</span> <span>23578.96</span></div>
+                            <div><span>最高:</span> <span>23662.25</span></div>
+                            <div><span>最低:</span> <span>23351.55</span></div>
+                            <div><span>昨收:</span> <span>23685.12</span></div>
+                            <div><span>日期:</span> <span>2026-01-30</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="asset-card negative">
+                        <div class="asset-name">标普500</div>
+                        <div class="asset-price">6939.03</div>
+                        <div class="asset-change negative">
+                            -29.98 (-0.43%)
+                        </div>
+                        <div class="asset-details">
+                            <div><span>开盘:</span> <span>6947.27</span></div>
+                            <div><span>最高:</span> <span>6964.09</span></div>
+                            <div><span>最低:</span> <span>6893.48</span></div>
+                            <div><span>昨收:</span> <span>6969.01</span></div>
+                            <div><span>日期:</span> <span>2026-01-30</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="asset-card negative">
+                        <div class="asset-name">道琼斯</div>
+                        <div class="asset-price">48892.47</div>
+                        <div class="asset-change negative">
+                            -179.09 (-0.36%)
+                        </div>
+                        <div class="asset-details">
+                            <div><span>开盘:</span> <span>48991.62</span></div>
+                            <div><span>最高:</span> <span>49047.68</span></div>
+                            <div><span>最低:</span> <span>48459.88</span></div>
+                            <div><span>昨收:</span> <span>49071.56</span></div>
+                            <div><span>日期:</span> <span>2026-01-30</span></div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- 贵金属 -->
+            <div class="section">
+                <h2 class="section-title">🥇 贵金属</h2>
+                <div class="assets-grid">
+                    
+                    <div class="asset-card negative">
+                        <div class="asset-name">黄金</div>
+                        <div class="asset-price">5067.5</div>
+                        <div class="asset-change negative">
+                            -250.9 (-4.72%)
+                        </div>
+                        <div class="asset-details">
+                            <div><span>开盘:</span> <span>5410.0</span></div>
+                            <div><span>最高:</span> <span>5480.2</span></div>
+                            <div><span>最低:</span> <span>4962.7</span></div>
+                            <div><span>昨收:</span> <span>5318.4</span></div>
+                            <div><span>日期:</span> <span>2026-01-30</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="asset-card negative">
+                        <div class="asset-name">白银</div>
+                        <div class="asset-price">98.5</div>
+                        <div class="asset-change negative">
+                            -15.54 (-13.62%)
+                        </div>
+                        <div class="asset-details">
+                            <div><span>开盘:</span> <span>115.89</span></div>
+                            <div><span>最高:</span> <span>118.45</span></div>
+                            <div><span>最低:</span> <span>95.12</span></div>
+                            <div><span>昨收:</span> <span>114.04</span></div>
+                            <div><span>日期:</span> <span>2026-01-30</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="asset-card negative">
+                        <div class="asset-name">铜</div>
+                        <div class="asset-price">6.01</div>
+                        <div class="asset-change negative">
+                            -0.16 (-2.6%)
+                        </div>
+                        <div class="asset-details">
+                            <div><span>开盘:</span> <span>6.28</span></div>
+                            <div><span>最高:</span> <span>6.39</span></div>
+                            <div><span>最低:</span> <span>5.9</span></div>
+                            <div><span>昨收:</span> <span>6.18</span></div>
+                            <div><span>日期:</span> <span>2026-01-30</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="asset-card negative">
+                        <div class="asset-name">铂金</div>
+                        <div class="asset-price">2270.0</div>
+                        <div class="asset-change negative">
+                            -327.4 (-12.6%)
+                        </div>
+                        <div class="asset-details">
+                            <div><span>开盘:</span> <span>2621.3</span></div>
+                            <div><span>最高:</span> <span>2669.5</span></div>
+                            <div><span>最低:</span> <span>2129.4</span></div>
+                            <div><span>昨收:</span> <span>2597.4</span></div>
+                            <div><span>日期:</span> <span>2026-01-30</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="asset-card negative">
+                        <div class="asset-name">钯金</div>
+                        <div class="asset-price">1837.0</div>
+                        <div class="asset-change negative">
+                            -163.6 (-8.18%)
+                        </div>
+                        <div class="asset-details">
+                            <div><span>开盘:</span> <span>2028.0</span></div>
+                            <div><span>最高:</span> <span>2065.5</span></div>
+                            <div><span>最低:</span> <span>1716.5</span></div>
+                            <div><span>昨收:</span> <span>2000.6</span></div>
+                            <div><span>日期:</span> <span>2026-01-30</span></div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- 能源 -->
+            <div class="section">
+                <h2 class="section-title">⛽ 能源</h2>
+                <div class="assets-grid">
+                    
+                    <div class="asset-card positive">
+                        <div class="asset-name">原油</div>
+                        <div class="asset-price">65.55</div>
+                        <div class="asset-change positive">
+                            +0.13 (+0.2%)
+                        </div>
+                        <div class="asset-details">
+                            <div><span>开盘:</span> <span>65.52</span></div>
+                            <div><span>最高:</span> <span>65.92</span></div>
+                            <div><span>最低:</span> <span>63.64</span></div>
+                            <div><span>昨收:</span> <span>65.42</span></div>
+                            <div><span>日期:</span> <span>2026-01-30</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="asset-card negative">
+                        <div class="asset-name">布伦特原油</div>
+                        <div class="asset-price">69.75</div>
+                        <div class="asset-change negative">
+                            -0.96 (-1.36%)
+                        </div>
+                        <div class="asset-details">
+                            <div><span>开盘:</span> <span>69.6</span></div>
+                            <div><span>最高:</span> <span>70.11</span></div>
+                            <div><span>最低:</span> <span>67.78</span></div>
+                            <div><span>昨收:</span> <span>70.71</span></div>
+                            <div><span>日期:</span> <span>2026-01-30</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="asset-card positive">
+                        <div class="asset-name">天然气</div>
+                        <div class="asset-price">4.09</div>
+                        <div class="asset-change positive">
+                            +0.17 (+4.44%)
+                        </div>
+                        <div class="asset-details">
+                            <div><span>开盘:</span> <span>3.88</span></div>
+                            <div><span>最高:</span> <span>4.12</span></div>
+                            <div><span>最低:</span> <span>3.82</span></div>
+                            <div><span>昨收:</span> <span>3.92</span></div>
+                            <div><span>日期:</span> <span>2026-01-30</span></div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- 统计摘要 -->
+            <div class="summary">
+                <h3>📊 市场统计</h3>
+                <div class="summary-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">监控资产数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2</div>
+                        <div class="stat-label">上涨资产</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">10</div>
+                        <div class="stat-label">下跌资产</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>数据来源: Yahoo Finance | 本报告仅供参考，不构成投资建议</p>
+        </div>
+    </div>
+</body>
+</html>
